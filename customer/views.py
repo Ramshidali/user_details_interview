@@ -55,17 +55,11 @@ def sign_up(request):
             data.user = user_data
             password = encrypt_message(password)
             data.save()
-            
-            response_data = {
-                "status": "true",
-                "title": "Successfully Created",
-                "message": "Customer created successfully.",
-                "redirect_url": reverse('customer:index')
-            }
+            return redirect(reverse('customer:index'))
         else:
             print("not valid")
             
-        return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+            return HttpResponse(json.dumps(response_data), content_type='application/javascript')
     
     else :
         form = SignUpForm()
@@ -73,6 +67,7 @@ def sign_up(request):
         context = {
         "form" : form,
         "page_name" : 'Sign Up',
+        "url": reverse('customer:sign_up')
     }
     return render(request,'registration/signup.html',context)
 
@@ -81,7 +76,7 @@ def signin(request):
         form = SignInForm(request.POST)
         
         if form.is_valid():
-            username = form.cleaned_data['username']
+            username = form.cleaned_data['email']
             password = form.cleaned_data['password']
             
             if User.objects.filter(username=username).exists():
@@ -89,25 +84,19 @@ def signin(request):
                 if user is not None:
                     login(request, user)
                 
-                    response_data = {
-                        "status": "true",
-                        "title": "Successful",
-                        "message": "Login success",
-                        'redirect': 'true',
-                        "redirect_url": reverse('customer:index')
-                    }
+                    return redirect(reverse('customer:index'))
                 else:
-                    response_data = {
-                        "status": "false",
-                        "message": "username and password do not match",
-                    }
-                return HttpResponse(json.dumps(response_data),content_type="application/json")
+                    
+                    return redirect(reverse('customer:index'))
             else:
                 response_data = {
                     "status": "false",
                     "message": "Incorrect username or password",
                 }
-                return HttpResponse(json.dumps(response_data),content_type="application/json")
+            return HttpResponse(json.dumps(response_data),content_type="application/json")
+        else:
+            print("not  valid")
+            return redirect(reverse('customer:signin'))
     else :
         form = SignInForm()
         

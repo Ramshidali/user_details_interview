@@ -55,12 +55,12 @@
                                                 {% csrf_token %}
 
                                                 <div class="form-group mb-2">
-                                                    <label for="username">Username</label>
+                                                    <label for="username">email</label>
                                                     <div class="input-group">                                                                                         
-                                                        <input type="text" class="form-control" value="{{ form.username.value|default:''}}" name="username" id="username" placeholder="Enter username">
+                                                        <input type="text" class="form-control" value="{{ form.email.value|default:''}}" name="email" id="email" placeholder="Enter email">
                                                     </div>                                    
-                                                    {% if form.username.errors %}
-                                                        <span class="error">{{ form.username.errors.as_text }}</span>
+                                                    {% if form.email.errors %}
+                                                        <span class="error">{{ form.email.errors.as_text }}</span>
                                                     {% endif %}
                                                 </div><!--end form-group--> 
                     
