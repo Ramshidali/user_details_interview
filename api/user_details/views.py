@@ -56,7 +56,15 @@ def customer(request):
                     "message" : "user created successfully",
                     "success" : True,
                 }
-            return Response(profile_serializer, status=status.HTTP_400_BAD_REQUEST)
+                return Response(response_data, status=status.HTTP_200_OK)
+            else:
+                response_data = {
+                "StatusCode": 400,
+                "message" : "not valid",
+                "success" : False,
+                }
+
+                return Response(profile_serializer, status=status.HTTP_400_BAD_REQUEST)
 
         response_data = {
             "StatusCode": 200,
