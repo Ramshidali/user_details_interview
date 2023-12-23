@@ -6,4 +6,10 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        exclude = ['name','email','employee']
+        fields = ['id','name','email']
+        
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ['name','email','password']

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from customer.models import Profile
 from customer.views import encrypt_message
-from api.user_details.serializers import ProfileSerializer
+from api.user_details.serializers import ProfileSerializer, ProfileUpdateSerializer
 
 #get and ceate view
 @api_view(['GET', 'POST'])
@@ -36,7 +36,7 @@ def customer(request):
             return Response(response_data, status=status.HTTP_200_OK)
 
     elif request.method == 'POST':
-        profile_serializer = ProfileSerializer(data=request.data)
+        profile_serializer = ProfileUpdateSerializer(data=request.data)
         email = request.data["email"]
         password = request.data["password"]
         print(email,type(email))
@@ -94,7 +94,7 @@ def edit_profile(request):
             return Response(response_data, status=status.HTTP_200_OK)
 
         elif request.method == 'PUT':
-            profile_serializer = ProfileSerializer(profile, data=request.data, partial=True)
+            profile_serializer = ProfileUpdateSerializer(profile, data=request.data, partial=True)
 
             if profile_serializer.is_valid():
                 profile = profile_serializer.save()
